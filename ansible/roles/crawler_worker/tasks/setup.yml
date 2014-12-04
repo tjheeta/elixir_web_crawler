@@ -1,0 +1,9 @@
+---
+- user: user={{ owner }} groups=sudo
+- copy: content="{{ owner }} ALL=(root) NOPASSWD:/sbin/shutdown\n" dest=/etc/sudoers.d/{{ owner }}_shutdown
+- template: src=startup.j2 dest={{homedir}}/startup.sh mode=0755 owner={{owner}} group={{group}} 
+- template: src=nodes.j2 dest={{homedir}}/.hosts.erlang mode=0644 
+- copy: content="8FNLANA3NVAL" dest={{homedir}}/.erlang.cookie mode=0400 owner={{owner}} group={{group}}
+- template: src=elixir_config.j2 dest={{homedir}}/main.conf mode=0644
+
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+export HOMEDIR={{ homedir }}
+export ERLANG_HOME={{ homedir }}
+APPDIR={{ appdir }}
+cp {{ homedir }}/main.conf  ${APPDIR}/config/
+cd ${APPDIR}
+mix deps.get
+mix deps.compile
+iex  --name "node@{{ ansible_default_ipv4['address'] }}" -S mix
+#elixir  --name "node@{{ ansible_default_ipv4['address'] }}" -S mix

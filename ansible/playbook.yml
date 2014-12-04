@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: true
+
+- hosts: storage
+  gather_facts: true
+  sudo: true
+  remote_user: ubuntu
+  vars:
+    master_ip: "{{hostvars[groups['storage'][0]]['ansible_eth0']['ipv4']['address']}}"
+  roles: 
+    - storage_node
+    - crawler_worker
+
+- hosts: worker
+  gather_facts: true
+  sudo: true
+  remote_user: ubuntu
+  vars:
+    master_ip: "{{hostvars[groups['storage'][0]]['ansible_eth0']['ipv4']['address']}}"
+  roles: 
+    - crawler_worker

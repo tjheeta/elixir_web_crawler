@@ -1,0 +1,4 @@
+owner: erlang
+group: erlang
+homedir: /home/erlang
+appdir: /vagrant/

@@ -1,0 +1,4 @@
+#!/bin/bash
+export ERLANG_HOME=/home/{{ owner }}
+export HOME=/home/{{ owner }}
+exec chpst -u {{ owner }} /home/erlang/startup.sh

@@ -1,0 +1,15 @@
+---
+- apt_repository: repo='deb http://packages.erlang-solutions.com/ubuntu trusty contrib' state=present
+- apt_key: id=A14F4FCA url=http://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc state=present
+- name: install required packages
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=86400 force=yes
+  with_items:
+      - esl-erlang
+      - elixir
+      - rebar
+      - git
+      - python-keyczar
+      - tinyproxy
+      - runit
+#when: hostvars[item]['ansible_default_ipv4'] is defined
+
