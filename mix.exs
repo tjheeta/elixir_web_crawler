@@ -5,6 +5,7 @@ defmodule ElixirWebCrawler.Mixfile do
     [app: :elixir_web_crawler,
      version: "0.0.1",
      elixir: "~> 1.0-dev",
+     conf_path: "config/main.conf",
      deps: deps]
   end
 
@@ -12,7 +13,7 @@ defmodule ElixirWebCrawler.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :eredis, :mix, :confort]]
   end
 
   # Dependencies can be Hex packages:
@@ -25,6 +26,10 @@ defmodule ElixirWebCrawler.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      {:eredis,  github: "wooga/eredis" },
+      {:poolboy,  github: "devinus/poolboy" },
+      {:confort, github: "zambal/confort" }
+    ]
   end
 end
