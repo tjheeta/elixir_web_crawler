@@ -13,7 +13,7 @@ defmodule ElixirWebCrawler.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :eredis, :mix, :confort]]
+    [applications: [:logger, :eredis, :mix, :confort, :ibrowse, :ssl]]
   end
 
   # Dependencies can be Hex packages:
@@ -27,9 +27,11 @@ defmodule ElixirWebCrawler.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:eredis,  github: "wooga/eredis" },
-      {:poolboy,  github: "devinus/poolboy" },
-      {:confort, github: "zambal/confort" }
+      {:eredis,  github: "wooga/eredis"},
+      {:poolboy,  github: "devinus/poolboy"},
+      {:confort, github: "zambal/confort"},
+      {:qrly, github: "marianoguerra/qrly"},
+      {:ibrowse, github: "cmullaparthi/ibrowse"}
     ]
   end
 end
