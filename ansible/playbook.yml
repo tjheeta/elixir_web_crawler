@@ -8,6 +8,10 @@
   remote_user: ubuntu
   vars:
     master_ip: "{{hostvars[groups['storage'][0]]['ansible_eth0']['ipv4']['address']}}"
+    workers:
+      start: false
+      limit: 100
+      concurrent: 0
   roles: 
     - storage_node
     - crawler_worker
@@ -18,5 +22,9 @@
   remote_user: ubuntu
   vars:
     master_ip: "{{hostvars[groups['storage'][0]]['ansible_eth0']['ipv4']['address']}}"
+    workers:
+      start: true
+      limit: 100
+      concurrent: 3
   roles: 
     - crawler_worker

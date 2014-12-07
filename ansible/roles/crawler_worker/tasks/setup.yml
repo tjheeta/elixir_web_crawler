@@ -6,4 +6,9 @@
 - copy: content="8FNLANA3NVAL" dest={{homedir}}/.erlang.cookie mode=0400 owner={{owner}} group={{group}}
 - template: src=elixir_config.j2 dest={{homedir}}/main.conf mode=0644
 
+# start the app with runit
+- file: path={{ homedir }}/runit_crawlr/log/main state=directory owner={{ owner }}
+- template: src=run_crawlr.j2 dest={{ homedir }}/runit_crawlr/run mode=0755
+- template: src=run_crawlr_log.j2 dest={{ homedir }}/runit_crawlr/log/run mode=0755
+- file: src={{ homedir }}/runit_crawlr dest=/etc/service/runit_crawlr state=link
 

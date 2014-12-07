@@ -13,7 +13,9 @@ defmodule ElixirWebCrawler.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :eredis, :mix, :confort, :ibrowse, :ssl]]
+    [applications: [:logger, :eredis, :mix, :confort, :ibrowse, :ssl],
+          mod: {ElixirWebCrawler, []}
+    ]
   end
 
   # Dependencies can be Hex packages:

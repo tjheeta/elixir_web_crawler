@@ -20,14 +20,18 @@ defmodule ElixirWebCrawler.Worker do
       worker(ElixirWebCrawler.Worker, [], restart: :permanent, id: worker_name, function: :spawn_download)
     end
     # setup 5 download workers
-    download_workers = Enum.map(1..5, spec_fun)
+    concurrent = Confort.get(:crawler, :concurrent)
+    download_workers = Enum.map(1..concurrent, spec_fun)
 
     children = [
       worker(ElixirWebCrawler.RedisSupervisor, []),
       worker(ElixirWebCrawler.Worker, [], restart: :permanent, id: "worker_parse", function: :spawn_parse),
       worker(ElixirWebCrawler.Worker, [], restart: :permanent, id: "worker_requeue", function: :spawn_requeue)
-      ] ++ download_workers
+      ] 
 
+    if Confort.get(:crawler, :start) do
+      children = children ++ download_workers
+    end
     supervise(children, strategy: :one_for_one)
   end
 
@@ -137,10 +141,11 @@ defmodule ElixirWebCrawler.Worker do
       current_count = tmp |> Integer.parse |> elem(0)
     end
     IO.puts "count = #{URI.parse(item).host} - #{current_count}"
+    limit = Confort.get(:crawler, :limit )
 
-    cond do 
+    cond do
       # Check if count is too high from this node
-      current_count > 100 ->
+      current_count > limit ->
         handle_failure(item, "shutting down as limit has passed - check worker.ex line 143 ")
       q(["SISMEMBER", "download_finished", item]) == "1" ->
         IO.puts "already done #{item}"
